@@ -1,0 +1,21 @@
+services:
+  pandora-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pandora-ui
+    restart: unless-stopped
+    ports:
+      - "8093:80"
+    environment:
+      - VITE_API_URL=${VITE_API_URL:-http://pandora-dl:3000}
+    depends_on:
+      pandora-dl:
+        condition: service_healthy
+    mem_limit: 128m
+    cpus: '0.5'
+
+networks:
+  default:
+    name: pandora-network
+    external: true
