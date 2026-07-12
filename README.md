@@ -18,17 +18,9 @@ Frontend Vue 3 untuk [Pandora DL](https://github.com/firdaus-rx/pandora-dl) — 
 ### Prasyarat
 
 - Docker + Docker Compose
-- [Pandora DL API](https://github.com/firdaus-rx/pandora-dl) sudah berjalan
+- [Pandora DL API](https://github.com/firdaus-rx/pandora-dl) sudah running di `https://pandora-dl.nscloud.my.id`
 
-### 1. Setup Network
-
-Buat network agar UI bisa komunikasi dengan API:
-
-```bash
-docker network create pandora-network
-```
-
-### 2. Jalankan
+### 1. Jalankan
 
 ```bash
 git clone https://github.com/firdaus-rx/pandora-ui.git
@@ -47,14 +39,11 @@ docker compose up -d --build
 
 ### 4. Konfigurasi API URL
 
-Edit `.env` atau set environment variable:
+Default sudah mengarah ke `https://pandora-dl.nscloud.my.id`.  
+Ubah via environment variable:
 
 ```bash
-# Jika API di host berbeda
-VITE_API_URL=http://192.168.1.100:8092
-
-# Jika API di container lain (default)
-VITE_API_URL=http://pandora-dl:3000
+VITE_API_URL=https://api-url-anda.com
 ```
 
 ---

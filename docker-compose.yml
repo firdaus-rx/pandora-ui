@@ -8,14 +8,6 @@ services:
     ports:
       - "8093:80"
     environment:
-      - VITE_API_URL=${VITE_API_URL:-http://pandora-dl:3000}
-    depends_on:
-      pandora-dl:
-        condition: service_healthy
+      - VITE_API_URL=${VITE_API_URL:-https://pandora-dl.nscloud.my.id}
     mem_limit: 128m
     cpus: '0.5'
-
-networks:
-  default:
-    name: pandora-network
-    external: true
