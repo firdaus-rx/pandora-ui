@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediaAI - AI Media Downloader</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@450&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: '#ef4444',
+            'accent-purple': '#8b5cf6',
+            surface: '#ffffff',
+            'surface-container': '#ffffff',
+            'surface-container-low': '#f1f5f9',
+            'surface-container-lowest': '#f8fafc',
+            'surface-variant': '#f1f5f9',
+            'on-surface': '#0f172a',
+            'on-surface-variant': '#475569',
+            'outline': '#cbd5e1',
+            'outline-variant': '#e2e8f0',
+            'primary': '#ef4444',
+            'primary-container': '#fecaca',
+            'on-primary': '#ffffff',
+            'on-primary-container': '#7f1d1d',
+            'secondary': '#8b5cf6',
+            'secondary-container': '#ede9fe',
+            'error': '#ef4444',
+            'background': '#f8fafc',
+            'on-background': '#0f172a',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .animate-gradient-line {
+      background: linear-gradient(90deg, #ef4444, #8b5cf6, #3b82f6, #ef4444);
+      background-size: 300% 100%;
+      animation: gradientMove 3s ease infinite;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

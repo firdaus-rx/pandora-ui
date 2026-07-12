@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediaAI | AI Downloader</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;family=JetBrains+Mono:wght@450&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#004395",
+                        "primary": "#d2bbff",
+                        "on-secondary": "#002e6a",
+                        "on-surface-variant": "#ccc3d8",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "secondary": "#adc6ff",
+                        "on-tertiary-fixed": "#131b2e",
+                        "surface-bright": "#2c3a4c",
+                        "tertiary-container": "#5e667d",
+                        "secondary-container": "#0566d9",
+                        "error": "#ffb4ab",
+                        "background": "#051424",
+                        "on-primary-fixed": "#25005a",
+                        "on-secondary-fixed": "#001a42",
+                        "on-tertiary": "#283044",
+                        "outline": "#958da1",
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "on-error": "#690005",
+                        "surface-container-lowest": "#010f1f",
+                        "on-primary": "#3f008e",
+                        "primary-container": "#7c3aed",
+                        "inverse-surface": "#d4e4fa",
+                        "surface-container": "#122131",
+                        "surface-container-low": "#0d1c2d",
+                        "inverse-on-surface": "#233143",
+                        "on-tertiary-container": "#dee5ff",
+                        "on-error-container": "#ffdad6",
+                        "surface-dim": "#051424",
+                        "outline-variant": "#4a4455",
+                        "surface-variant": "#273647",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#273647",
+                        "on-background": "#d4e4fa",
+                        "inverse-primary": "#732ee4",
+                        "surface": "#051424",
+                        "on-primary-container": "#ede0ff",
+                        "on-surface": "#d4e4fa",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "surface-tint": "#d2bbff",
+                        "primary-fixed-dim": "#d2bbff",
+                        "tertiary": "#bec6e0",
+                        "tertiary-fixed": "#dae2fd",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "surface-container-high": "#1c2b3c",
+                        "on-secondary-container": "#e6ecff",
+                        "secondary-fixed": "#d8e2ff",
+                        "primary-fixed": "#eaddff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "32px",
+                        "stack-md": "16px",
+                        "container-max": "1440px",
+                        "stack-xs": "4px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "sidebar-width": "260px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "title-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "mono-label": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "title-md": ["18px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "mono-label": ["13px", {"lineHeight": "18px", "fontWeight": "450"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #051424;
+            color: #d4e4fa;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .message-bubble-ai {
+            background: rgba(51, 65, 85, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .input-glow:focus-within {
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+            border-color: #d2bbff;
+        }
+        .active-nav-indicator {
+            position: absolute;
+            left: 0;
+            width: 2px;
+            height: 24px;
+            background: linear-gradient(to bottom, #7c3aed, #d2bbff);
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex overflow-hidden">
+<!-- SideNavBar (Shared Component) -->
+<aside class="w-sidebar-width h-screen fixed left-0 top-0 bg-surface-container/50 dark:bg-surface-container/50 backdrop-blur-xl border-r border-outline-variant/10 shadow-2xl flex flex-col py-stack-lg z-50">
+<div class="px-6 mb-8">
+<h1 class="font-display-lg text-display-lg font-bold text-primary">MediaAI</h1>
+<p class="text-on-surface-variant font-body-sm">Pro Plan</p>
+</div>
+<nav class="flex-1 space-y-1 px-3 overflow-y-auto scrollbar-hide">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant/30 hover:text-primary transition-colors scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="relative flex items-center gap-3 px-3 py-3 rounded-lg text-primary font-bold border-l-2 border-primary bg-primary-container/10 scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-body-md text-body-md">AI Downloader</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant/30 hover:text-primary transition-colors scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">video_library</span>
+<span class="font-body-md text-body-md">Library</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant/30 hover:text-primary transition-colors scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</nav>
+<div class="px-6 mb-6">
+<button class="w-full py-3 bg-primary-container text-on-primary-container rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+                New Download
+            </button>
+</div>
+<div class="px-3 border-t border-outline-variant/10 pt-6">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant/30 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant/30 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md text-body-md">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="ml-sidebar-width w-[calc(100%-260px)] h-screen flex flex-col relative">
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 right-0 w-[calc(100%-260px)] z-40 bg-surface/30 dark:bg-surface/30 backdrop-blur-md border-b border-outline-variant/5 flex justify-between items-center h-16 px-gutter">
+<div class="flex items-center gap-6">
+<div class="relative w-64 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-1.5 pl-10 pr-4 text-body-sm focus:ring-1 focus:ring-primary" placeholder="Search conversations..." type="text"/>
+</div>
+<nav class="hidden md:flex gap-6">
+<a class="text-on-surface-variant hover:text-primary font-title-md text-title-md transition-all" href="#">Docs</a>
+<a class="text-on-surface-variant hover:text-primary font-title-md text-title-md transition-all" href="#">API</a>
+<a class="text-on-surface-variant hover:text-primary font-title-md text-title-md transition-all" href="#">Feedback</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary active:opacity-80 transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary active:opacity-80 transition-all">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="Close up portrait of a professional UI designer with a modern tech background, cool blue and purple lighting, sleek atmosphere, high-end photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzk5ep_ji_yk-UMEdcm9B1c7Z2jv1U1VmRPcLMP6WN4JFgAj2PGoLrF7c5IQs3-BN4vMfaMXnw_z3tqQsukkUvGu4IMM5faSs1pxgcwSX2Cg7jB8iKppDypON16xazxuGtMrBUhKKzQBxt_eFLJccvpB4HssCk4K4yfkA8DUEzMXIti4tI7R_ZT1b_87_rtxfhknlEpdkNkR7AX6LQUawQSzN2GyL0zh0LoOg6GH1UYZtCh-tKG7Sp"/>
+</div>
+</div>
+</header>
+<!-- Two-Panel Chat Interface -->
+<div class="flex flex-1 pt-16 h-full overflow-hidden">
+<!-- Panel Left: Conversation History -->
+<section class="w-80 border-r border-outline-variant/10 flex flex-col h-full bg-surface-container-low/30">
+<div class="p-gutter flex justify-between items-center">
+<h2 class="font-title-md text-title-md font-bold text-on-surface">Recent Activity</h2>
+<button class="text-primary hover:bg-primary/10 p-1 rounded-full transition-colors">
+<span class="material-symbols-outlined">edit_square</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto scrollbar-hide px-2 space-y-1 pb-20">
+<!-- History Item Active -->
+<div class="p-3 rounded-xl bg-surface-variant/40 border border-primary/20 cursor-pointer group">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-mono-label text-primary uppercase">YouTube</span>
+<span class="text-[10px] text-on-surface-variant">2m ago</span>
+</div>
+<p class="text-body-sm font-medium text-on-surface truncate">Synthwave Essentials 2024 Mix...</p>
+<div class="mt-2 flex items-center gap-2 text-[10px] text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">check_circle</span>
+<span>MP3 • 320kbps</span>
+</div>
+</div>
+<!-- History Item -->
+<div class="p-3 rounded-xl hover:bg-surface-variant/20 cursor-pointer transition-colors group">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-mono-label text-on-surface-variant uppercase">Instagram</span>
+<span class="text-[10px] text-on-surface-variant">1h ago</span>
+</div>
+<p class="text-body-sm font-medium text-on-surface-variant group-hover:text-on-surface truncate">Modern Architecture Reel - Tokyo...</p>
+<div class="mt-2 flex items-center gap-2 text-[10px] text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">download</span>
+<span>MP4 • 1080p</span>
+</div>
+</div>
+<!-- History Item -->
+<div class="p-3 rounded-xl hover:bg-surface-variant/20 cursor-pointer transition-colors group">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-mono-label text-on-surface-variant uppercase">TikTok</span>
+<span class="text-[10px] text-on-surface-variant">Yesterday</span>
+</div>
+<p class="text-body-sm font-medium text-on-surface-variant group-hover:text-on-surface truncate">Gordon Ramsay Steak Recipe...</p>
+<div class="mt-2 flex items-center gap-2 text-[10px] text-on-surface-variant">
+<span class="material-symbols-outlined text-xs text-error">error</span>
+<span>Failed • Retry?</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Panel Right: Chat Canvas -->
+<section class="flex-1 flex flex-col h-full bg-background relative">
+<!-- Background Shader Decoration -->
+<div class="absolute inset-0 z-0 pointer-events-none opacity-20">
+
+</div>
+<!-- Chat Messages Scroll Area -->
+<div class="flex-1 overflow-y-auto px-gutter py-8 space-y-8 z-10 scrollbar-hide">
+<!-- AI Initial Message -->
+<div class="flex gap-4 max-w-3xl">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container text-sm">smart_toy</span>
+</div>
+<div class="space-y-4">
+<div class="message-bubble-ai p-4 rounded-2xl rounded-tl-none">
+<p class="font-body-md text-body-md text-on-surface">Hello! I'm your MediaAI Downloader. Paste a link from YouTube, Instagram, or TikTok and let me know the format you need. How can I help today?</p>
+</div>
+</div>
+</div>
+<!-- User Prompt -->
+<div class="flex gap-4 max-w-3xl ml-auto flex-row-reverse">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 border border-outline-variant/30">
+<span class="material-symbols-outlined text-on-surface text-sm">person</span>
+</div>
+<div class="bg-primary text-on-primary p-4 rounded-2xl rounded-tr-none shadow-lg">
+<p class="font-body-md text-body-md">Download https://youtube.com/watch?v=dQw4w9WgXcQ as a high quality MP3</p>
+</div>
+</div>
+<!-- AI Response Card: Command Parsing -->
+<div class="flex gap-4 max-w-3xl">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container text-sm">smart_toy</span>
+</div>
+<div class="w-full space-y-4">
+<div class="message-bubble-ai p-4 rounded-2xl rounded-tl-none border-l-4 border-primary">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-primary text-lg">auto_awesome</span>
+<span class="font-label-caps text-label-caps tracking-widest text-primary uppercase">Command Parsed</span>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<div class="bg-surface-container-highest/30 p-3 rounded-xl border border-white/5">
+<p class="text-[10px] text-on-surface-variant uppercase mb-1">Platform</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-on-primary-fixed">play_circle</span>
+<p class="text-sm font-bold">YouTube</p>
+</div>
+</div>
+<div class="bg-surface-container-highest/30 p-3 rounded-xl border border-white/5">
+<p class="text-[10px] text-on-surface-variant uppercase mb-1">Format</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-secondary">music_note</span>
+<p class="text-sm font-bold">MP3</p>
+</div>
+</div>
+<div class="bg-surface-container-highest/30 p-3 rounded-xl border border-white/5">
+<p class="text-[10px] text-on-surface-variant uppercase mb-1">Quality</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-tertiary">high_quality</span>
+<p class="text-sm font-bold">320kbps</p>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Download Result Card -->
+<div class="glass-panel p-4 rounded-3xl overflow-hidden shadow-2xl transition-all hover:border-primary/30">
+<div class="flex gap-4">
+<div class="w-32 h-20 rounded-xl overflow-hidden relative shrink-0 group">
+<img class="w-full h-full object-cover" data-alt="A cinematic vaporwave digital illustration of a glowing retro car driving towards a neon synthwave sunset, purple and cyan color palette, aesthetic digital art style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDecM-02Id7J-IRMmssSOAoc7kWQgP3k5v6for2Fjz7XmIRjsmeG44O98yTI3XMcdrIj_05yTfhiiI4ySxshk_rCuaOwcylhg6ylUwKZ53zqR2YwfD9CpWZ9f-Eaj11X1jvrKhj29tvK_mOD5Tq6KUsP6T164gxIQSDEYaUnb25Q5t-yGR5kM7O6-Gcq43HG4RAmkWFwzk2POrTDCCTD3Ly7tbujpS49b91-effF7KLMGlh1GrsLSZl"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-3xl">play_arrow</span>
+</div>
+<div class="absolute bottom-1 right-1 bg-black/60 px-1.5 py-0.5 rounded text-[10px] font-mono-label">03:32</div>
+</div>
+<div class="flex-1 flex flex-col justify-between py-1">
+<div>
+<h3 class="font-title-md text-on-surface leading-tight line-clamp-1">Rick Astley - Never Gonna Give You Up (Official Music Video)</h3>
+<p class="text-body-sm text-on-surface-variant">Size: 8.2 MB • Bitrate: 320kbps</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex-1 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%] rounded-full shadow-[0_0_10px_rgba(210,187,255,0.5)]"></div>
+</div>
+<span class="text-xs font-mono-label text-primary">75%</span>
+</div>
+</div>
+</div>
+<div class="mt-4 flex gap-2">
+<button class="flex-1 py-2 bg-primary-container/20 text-primary border border-primary/20 rounded-xl font-bold text-body-sm hover:bg-primary-container/40 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">download</span>
+                                        Download Now
+                                    </button>
+<button class="px-4 py-2 bg-surface-variant/40 text-on-surface rounded-xl hover:bg-surface-variant/60 transition-colors">
+<span class="material-symbols-outlined text-sm">share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Input Area -->
+<div class="p-gutter pt-0 z-20">
+<div class="max-w-4xl mx-auto space-y-4">
+<!-- Suggested Chips -->
+<div class="flex gap-2 overflow-x-auto scrollbar-hide">
+<button class="shrink-0 px-4 py-2 rounded-full border border-outline-variant/20 bg-surface-container/50 text-body-sm hover:bg-surface-variant/30 hover:border-primary/50 transition-all">
+                                🎵 Extract Audio from YT
+                            </button>
+<button class="shrink-0 px-4 py-2 rounded-full border border-outline-variant/20 bg-surface-container/50 text-body-sm hover:bg-surface-variant/30 hover:border-primary/50 transition-all">
+                                🎬 Download IG Reel 4K
+                            </button>
+<button class="shrink-0 px-4 py-2 rounded-full border border-outline-variant/20 bg-surface-container/50 text-body-sm hover:bg-surface-variant/30 hover:border-primary/50 transition-all">
+                                📱 TikTok without Watermark
+                            </button>
+<button class="shrink-0 px-4 py-2 rounded-full border border-outline-variant/20 bg-surface-container/50 text-body-sm hover:bg-surface-variant/30 hover:border-primary/50 transition-all">
+                                📄 Get Subtitles (.srt)
+                            </button>
+</div>
+<!-- Main Input -->
+<div class="glass-panel p-2 rounded-[2rem] flex items-center gap-2 input-glow transition-all">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">attachment</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface placeholder:text-on-surface-variant py-3 px-2" placeholder="Download YouTube link to MP3..." type="text"/>
+<div class="flex items-center gap-1">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+<p class="text-center text-[10px] text-on-surface-variant pb-4">
+                            MediaAI can make mistakes. Verify your source links before processing.
+                        </p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('.glass-panel, .message-bubble-ai').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                el.style.setProperty('--mouse-x', `${x}px`);
+                el.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>

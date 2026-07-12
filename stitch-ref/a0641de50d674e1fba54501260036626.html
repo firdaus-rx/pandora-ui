@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Library | MediaAI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@450&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --sidebar-width: 260px;
+        }
+        body {
+            background-color: #051424;
+            color: #d4e4fa;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(210, 187, 255, 0.2);
+            border-radius: 10px;
+        }
+        .media-card-hover:hover .quick-actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#004395",
+                        "primary": "#d2bbff",
+                        "on-secondary": "#002e6a",
+                        "on-surface-variant": "#ccc3d8",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "secondary": "#adc6ff",
+                        "on-tertiary-fixed": "#131b2e",
+                        "surface-bright": "#2c3a4c",
+                        "tertiary-container": "#5e667d",
+                        "secondary-container": "#0566d9",
+                        "error": "#ffb4ab",
+                        "background": "#051424",
+                        "on-primary-fixed": "#25005a",
+                        "on-secondary-fixed": "#001a42",
+                        "on-tertiary": "#283044",
+                        "outline": "#958da1",
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "on-error": "#690005",
+                        "surface-container-lowest": "#010f1f",
+                        "on-primary": "#3f008e",
+                        "primary-container": "#7c3aed",
+                        "inverse-surface": "#d4e4fa",
+                        "surface-container": "#122131",
+                        "surface-container-low": "#0d1c2d",
+                        "inverse-on-surface": "#233143",
+                        "on-tertiary-container": "#dee5ff",
+                        "on-error-container": "#ffdad6",
+                        "surface-dim": "#051424",
+                        "outline-variant": "#4a4455",
+                        "surface-variant": "#273647",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#273647",
+                        "on-background": "#d4e4fa",
+                        "inverse-primary": "#732ee4",
+                        "surface": "#051424",
+                        "on-primary-container": "#ede0ff",
+                        "on-surface": "#d4e4fa",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "surface-tint": "#d2bbff",
+                        "primary-fixed-dim": "#d2bbff",
+                        "tertiary": "#bec6e0",
+                        "tertiary-fixed": "#dae2fd",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "surface-container-high": "#1c2b3c",
+                        "on-secondary-container": "#e6ecff",
+                        "secondary-fixed": "#d8e2ff",
+                        "primary-fixed": "#eaddff"
+                    },
+                    "spacing": {
+                        "stack-lg": "32px",
+                        "stack-md": "16px",
+                        "container-max": "1440px",
+                        "stack-xs": "4px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "sidebar-width": "260px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "title-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "mono-label": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="w-sidebar-width h-screen fixed left-0 top-0 bg-surface-container/50 dark:bg-surface-container/50 backdrop-blur-xl border-r border-outline-variant/10 shadow-2xl flex flex-col py-stack-lg z-50">
+<div class="px-gutter mb-stack-lg">
+<h1 class="font-display-lg text-[32px] font-bold text-primary tracking-tighter">MediaAI</h1>
+<p class="font-body-sm text-on-surface-variant opacity-70">Pro Plan</p>
+</div>
+<nav class="flex-1 px-stack-sm space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant/30 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-90 transition-transform">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant/30 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-90 transition-transform">smart_toy</span>
+<span class="font-body-md">AI Downloader</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-bold border-l-2 border-primary bg-primary-container/10 group" href="#">
+<span class="material-symbols-outlined group-active:scale-90 transition-transform">video_library</span>
+<span class="font-body-md">Library</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant/30 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined group-active:scale-90 transition-transform">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-stack-sm space-y-1">
+<button class="w-full mb-stack-md flex items-center justify-center gap-2 bg-primary-container text-on-primary-container py-3 rounded-xl font-bold shadow-lg shadow-primary-container/20 hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add</span>
+                New Download
+            </button>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant/30 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-body-md">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant/30 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-md">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="flex-1 ml-[260px] min-h-screen flex flex-col relative">
+<!-- TopNavBar (Shared Component) -->
+<header class="sticky top-0 h-16 bg-surface/30 backdrop-blur-md border-b border-outline-variant/5 flex items-center justify-between px-gutter z-40">
+<div class="flex items-center gap-stack-md flex-1">
+<div class="relative w-full max-w-md group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant/20 rounded-full py-2 pl-10 pr-4 text-body-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all" placeholder="Search library..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-stack-md">
+<div class="hidden md:flex items-center gap-gutter mr-stack-lg">
+<a class="text-on-surface-variant hover:text-primary transition-all font-title-md" href="#">Docs</a>
+<a class="text-on-surface-variant hover:text-primary transition-all font-title-md" href="#">API</a>
+<a class="text-on-surface-variant hover:text-primary transition-all font-title-md" href="#">Feedback</a>
+</div>
+<div class="flex items-center gap-stack-sm border-l border-outline-variant/20 pl-stack-md">
+<button class="p-2 text-on-surface-variant hover:text-primary active:opacity-80 transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary active:opacity-80 transition-all">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden ml-stack-sm border border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A professional studio headshot of a creative technologist in a high-tech studio environment. The lighting is dramatic and moody with cyan and purple rim lights reflecting off the subject's glasses. The background is a blurred digital workspace with multiple monitors, maintaining a sleek, dark-mode professional aesthetic consistent with a premium AI media platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhMcR3FevdFsK3U9x8YDb_McoCupgfr7U_VcRqAEAoz-kjS9qeIQuTfyld138yHkp4oL6ixUgOpl3_rr4vdi6gu34j5XALXIdO4SE2jrK49AAFfgZaIKo4CjsEm5wyewZSv5AxmcEy3actzccmasYBLtyvPm_u7s9xvgXqnEtggEn1liaYOTElXUSl2L3aqQeWAwsGkvP-tOod33MgnpB-0fxqaH0G6Cipki4a9M3J71hd9u89g1sB"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Library Dashboard Layout -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Left: Playlist Sidebar Tree View -->
+<aside class="w-64 border-r border-outline-variant/5 bg-surface-container-lowest/30 flex flex-col">
+<div class="p-stack-md">
+<p class="font-label-caps text-on-surface-variant uppercase mb-stack-sm tracking-widest opacity-50">Directories</p>
+<div class="space-y-1 custom-scrollbar overflow-y-auto max-h-[calc(100vh-12rem)]">
+<!-- Tree Item -->
+<div class="group">
+<button class="flex items-center gap-2 w-full p-2 text-primary font-bold bg-primary/5 rounded-lg transition-all">
+<span class="material-symbols-outlined text-[18px]">folder_open</span>
+<span class="text-body-sm">All Downloads</span>
+<span class="ml-auto text-[10px] bg-primary/20 px-1.5 py-0.5 rounded-full">128</span>
+</button>
+</div>
+<!-- Platform Groups -->
+<div class="pt-stack-sm space-y-1">
+<details class="group" open="">
+<summary class="flex items-center gap-2 p-2 text-on-surface-variant hover:text-primary cursor-pointer list-none transition-all">
+<span class="material-symbols-outlined text-[18px] transition-transform group-open:rotate-90">chevron_right</span>
+<span class="text-body-sm font-medium">Platforms</span>
+</summary>
+<div class="pl-6 space-y-1 mt-1">
+<a class="flex items-center justify-between p-2 text-on-surface-variant hover:bg-surface-variant/20 rounded-lg text-body-sm" href="#">
+<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>YouTube</span>
+<span class="text-[10px] opacity-40">42</span>
+</a>
+<a class="flex items-center justify-between p-2 text-on-surface-variant hover:bg-surface-variant/20 rounded-lg text-body-sm" href="#">
+<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-pink-500"></span>TikTok</span>
+<span class="text-[10px] opacity-40">36</span>
+</a>
+<a class="flex items-center justify-between p-2 text-on-surface-variant hover:bg-surface-variant/20 rounded-lg text-body-sm" href="#">
+<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Twitter / X</span>
+<span class="text-[10px] opacity-40">18</span>
+</a>
+<a class="flex items-center justify-between p-2 text-on-surface-variant hover:bg-surface-variant/20 rounded-lg text-body-sm" href="#">
+<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>Instagram</span>
+<span class="text-[10px] opacity-40">32</span>
+</a>
+</div>
+</details>
+<details class="group">
+<summary class="flex items-center gap-2 p-2 text-on-surface-variant hover:text-primary cursor-pointer list-none transition-all">
+<span class="material-symbols-outlined text-[18px] transition-transform group-open:rotate-90">chevron_right</span>
+<span class="text-body-sm font-medium">Collections</span>
+</summary>
+<div class="pl-6 space-y-1 mt-1">
+<a class="flex items-center gap-2 p-2 text-on-surface-variant hover:bg-surface-variant/20 rounded-lg text-body-sm" href="#">
+<span class="material-symbols-outlined text-[16px]">star</span>AI Art Reference
+                                    </a>
+<a class="flex items-center gap-2 p-2 text-on-surface-variant hover:bg-surface-variant/20 rounded-lg text-body-sm" href="#">
+<span class="material-symbols-outlined text-[16px]">movie</span>Motion Graphics
+                                    </a>
+</div>
+</details>
+</div>
+</div>
+</div>
+</aside>
+<!-- Right: Content Area -->
+<section class="flex-1 flex flex-col bg-surface-container-low/20">
+<!-- Toolbar -->
+<div class="p-gutter flex flex-col gap-gutter border-b border-outline-variant/5">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-lg text-on-surface">Library</h2>
+<p class="text-body-sm text-on-surface-variant">Manage your downloaded media and AI enhancements</p>
+</div>
+<div class="flex items-center gap-stack-sm">
+<div class="flex bg-surface-container rounded-lg p-1">
+<button class="p-1.5 bg-primary/20 text-primary rounded-md"><span class="material-symbols-outlined text-[20px]">grid_view</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">view_list</span></button>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between gap-gutter">
+<div class="flex items-center gap-stack-md overflow-x-auto no-scrollbar pb-2 md:pb-0">
+<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary text-body-sm font-bold flex items-center gap-2">
+                                All <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant text-body-sm font-medium hover:bg-surface-variant/40 transition-colors">Videos</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant text-body-sm font-medium hover:bg-surface-variant/40 transition-colors">Audio</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant text-body-sm font-medium hover:bg-surface-variant/40 transition-colors">Images</button>
+<div class="w-px h-6 bg-outline-variant/20"></div>
+<button class="px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant text-body-sm font-medium hover:bg-surface-variant/40 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">filter_list</span> Filter
+                            </button>
+</div>
+<div class="flex items-center gap-stack-sm">
+<span class="text-body-sm text-on-surface-variant">Sort by:</span>
+<button class="flex items-center gap-1 text-body-sm font-bold text-primary">
+                                Newest First
+                                <span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Media Grid -->
+<div class="flex-1 overflow-y-auto p-gutter custom-scrollbar">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<!-- Media Card 1 -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col group/card media-card-hover relative transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+<div class="relative aspect-video">
+<img class="w-full h-full object-cover" data-alt="A breathtaking cinematic wide shot of a futuristic neon city during a rainy night. The image features deep purple and cyan reflections on wet asphalt. Towering skyscrapers with holographic advertisements loom in the background. The aesthetic is high-end cyberpunk with sharp details and atmospheric fog, designed for a premium media library interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkUYBQQX1NoEuy0diy8gnkM2u72uoSWDk0bZ_IL1oaH_DNkntbKvfkJHYk70udQ-8PW6RkVqH6b4k9RODLkHpykG3LyTW9kHbmnWzdhW8nlOYyZQOzIEN6uvLR9CWKQ7ir5-ay3BhJCui6Z78ZgzCU3FHBC3cfe1ntTIXTMGOwoJ9__2pRfR0_vnPgA2V-iJeaEd_dTio1gW3CEWcWBXdCLYG9M48AMrcTlMLCiTTdgSeUqUDL9IvF"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover/card:opacity-100 transition-opacity flex items-center justify-center gap-stack-md">
+<button class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg transform translate-y-4 group-hover/card:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md flex items-center gap-1 text-[10px] font-bold text-white border border-white/10">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> YouTube
+                                </div>
+<div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[10px] font-mono-label text-white">
+                                    12:45
+                                </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<h3 class="text-body-md font-bold truncate text-on-surface group-hover/card:text-primary transition-colors">Future City Cinematic - 8K Rendering</h3>
+<div class="flex items-center justify-between text-[11px] text-on-surface-variant/60 font-mono-label">
+<span>248.5 MB</span>
+<span>4K • MP4</span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<button class="flex-1 bg-surface-variant/30 hover:bg-surface-variant/60 py-2 rounded-lg text-[12px] font-bold transition-all border border-outline-variant/10">Manage</button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Media Card 2 -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col group/card media-card-hover relative transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+<div class="relative aspect-video">
+<img class="w-full h-full object-cover" data-alt="A vibrant, fast-paced TikTok style edit featuring a young dancer in an urban setting. The shot uses a vertical format within a horizontal container, with blurred mirrored edges. High energy lighting with pink and orange color grades. The overall feel is modern, trendy, and social-media focused, maintaining the sleek dark mode UI theme of the downloader." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAUDRRQDd_EhDLMs8sP9Ug3NWmy7Y5djfVCrzLHbCg_D3pheLHuUkYOa76PvdNUa1ilJaWSBctr33N2humg_FeX3m6M9vV_1Nu6LYZwnKy04zJUrZMkxi7uO_g29pDVj-R4SU0CWJcQWwZD-h3sPBIPD-DmWmSHGuAW79eo4jSnVUPAMojF-K87p3Sklgf22j0sE0-vmIgGeRo9DPpRRIUTpZIT828Oy_zwp6CEZ9B2uAvlRIao120"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover/card:opacity-100 transition-opacity flex items-center justify-center gap-stack-md">
+<button class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg transform translate-y-4 group-hover/card:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md flex items-center gap-1 text-[10px] font-bold text-white border border-white/10">
+<span class="w-1.5 h-1.5 rounded-full bg-pink-500"></span> TikTok
+                                </div>
+<div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[10px] font-mono-label text-white">
+                                    00:30
+                                </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<h3 class="text-body-md font-bold truncate text-on-surface group-hover/card:text-primary transition-colors">Urban Motion Challenge #Viral</h3>
+<div class="flex items-center justify-between text-[11px] text-on-surface-variant/60 font-mono-label">
+<span>12.2 MB</span>
+<span>1080p • MP4</span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<button class="flex-1 bg-surface-variant/30 hover:bg-surface-variant/60 py-2 rounded-lg text-[12px] font-bold transition-all border border-outline-variant/10">Manage</button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Media Card 3 -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col group/card media-card-hover relative transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+<div class="relative aspect-video">
+<img class="w-full h-full object-cover" data-alt="A detailed digital art portrait of a character with bioluminescent markings. The style is inspired by modern fantasy illustration with a cool-toned color palette dominated by deep blues and glowing electric whites. The lighting is ethereal and soft, highlighting intricate skin textures and glowing particles in the air. Professional digital art showcase aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAI_sVodktDOtd8eRN1lRHTvPlMR2zZgvCh-zJf1zSPPhn3x8qaBWu-YtiJmmIJMHrC1sElpn3ygk0jT5TRv7MTgQXhhYRxBPcol82Hrf-yVpm4aa5P7TCBLDTFtZ-zqfr2LW73RWm7Qok1tts0JuchXu8RIN1R0w1MNi9KK-MrAJw_-wFMlcdOBPN7b8ZSfN4cqVmKOYq4VTXQHiimAyI5HZwK57WR6WgZ3V7Rm2CPszFfyKs3AlOI"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover/card:opacity-100 transition-opacity flex items-center justify-center gap-stack-md">
+<button class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg transform translate-y-4 group-hover/card:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md flex items-center gap-1 text-[10px] font-bold text-white border border-white/10">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Twitter / X
+                                </div>
+<div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[10px] font-mono-label text-white">
+                                    01:15
+                                </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<h3 class="text-body-md font-bold truncate text-on-surface group-hover/card:text-primary transition-colors">Artist Showcase: Bioluminescent Souls</h3>
+<div class="flex items-center justify-between text-[11px] text-on-surface-variant/60 font-mono-label">
+<span>84.9 MB</span>
+<span>1440p • MP4</span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<button class="flex-1 bg-surface-variant/30 hover:bg-surface-variant/60 py-2 rounded-lg text-[12px] font-bold transition-all border border-outline-variant/10">Manage</button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Media Card 4 -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col group/card media-card-hover relative transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+<div class="relative aspect-video">
+<img class="w-full h-full object-cover" data-alt="A lush, cinematic nature landscape featuring a misty mountain range at sunrise. Golden hour light pierces through the clouds, illuminating a crystal clear lake in the foreground. The color palette is warm and inviting with deep greens and vibrant oranges. Professional travel vlog aesthetic with high dynamic range and crisp textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx-FYutswhlPK9X4jhVLUt5aXFg58pQxgZ-YJWJLqRnuaViZIyDqUMDlspkNN8hVWpivoL4ZM_6eIiZ-0R0js3aKLfUeIWDlfdiDCBH4C_dOLA7AnyxgZuz2SzhWscp0-3AunlIcRNSOqiuZTvxffE0TFU8GYoQnDfYbov7cedXwxNvteBUtU4K4Ff2F44Bof3LIT4ZckinLKjQ5tWnvmwpBoj9SclI4SmsS_0t93bnCMIRRUaLsLH"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover/card:opacity-100 transition-opacity flex items-center justify-center gap-stack-md">
+<button class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg transform translate-y-4 group-hover/card:translate-y-0 transition-all duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md flex items-center gap-1 text-[10px] font-bold text-white border border-white/10">
+<span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> Instagram
+                                </div>
+<div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[10px] font-mono-label text-white">
+                                    00:15
+                                </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<h3 class="text-body-md font-bold truncate text-on-surface group-hover/card:text-primary transition-colors">Nature's Whisper - Golden Hour Mist</h3>
+<div class="flex items-center justify-between text-[11px] text-on-surface-variant/60 font-mono-label">
+<span>5.8 MB</span>
+<span>1080p • MP4</span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<button class="flex-1 bg-surface-variant/30 hover:bg-surface-variant/60 py-2 rounded-lg text-[12px] font-bold transition-all border border-outline-variant/10">Manage</button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Repeat/Additional cards for grid density -->
+<!-- Media Card 5 -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col group/card media-card-hover relative transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+<div class="relative aspect-video">
+<img class="w-full h-full object-cover" data-alt="A professional podcast recording session in a high-end studio. Two individuals are seen with high-grade microphones and pop filters. The room is treated with acoustic panels and soft, warm ambient lighting. The atmosphere is intellectual and professional, with a modern dark-mode color scheme of slate and charcoal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5is4tHskin_-GciFzMAlERyNsrBT3YYWjpI-Rl66vqrSXTUS9hN3b1PJsXaNF4gJnLecpk5mmJlvhCDpmRtQL347U6GMUVPm_8GrCmujwFBnyo9kb1pjxQ5gZFjXRqnCdLdxj_c0cfQlhrc_gyAjnqb1bc5Jo9KlcteZNT4pHGGHybBDhCX76P0YvdH-a2nEFjk5Bg0lsmo90nM_AmimC0-o44pUMRDzNUF7P14_vyFEvtc7sc_35"/>
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md flex items-center gap-1 text-[10px] font-bold text-white border border-white/10">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> YouTube
+                                </div>
+<div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[10px] font-mono-label text-white">
+                                    58:20
+                                </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<h3 class="text-body-md font-bold truncate text-on-surface group-hover/card:text-primary transition-colors">AI &amp; Society: The 2024 Tech Summit</h3>
+<div class="flex items-center justify-between text-[11px] text-on-surface-variant/60 font-mono-label">
+<span>1.4 GB</span>
+<span>1080p • MP4</span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<button class="flex-1 bg-surface-variant/30 hover:bg-surface-variant/60 py-2 rounded-lg text-[12px] font-bold transition-all border border-outline-variant/10">Manage</button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Media Card 6 -->
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col group/card media-card-hover relative transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+<div class="relative aspect-video">
+<img class="w-full h-full object-cover" data-alt="A high-performance gaming setup with vibrant RGB lighting in a dark room. The image shows a close-up of a high-refresh-rate monitor displaying an action-packed video game. The desk is clean with a mechanical keyboard and a premium mouse. The lighting is dominated by electric blue and neon red streaks, creating a high-energy gaming aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxm2miKSBLMSn4gI79A6UmhlZiIoLIer1PSWG6tKEXXp4C5ThAzPDKe4RvmkHpqkbWk6e2GIhqTJUcy-AiNb56et5SNZeJLULfCLyYQnf8h836-YdhDjGJsjssep9IPRaG_RaqTDWafnwH_PZBSlM9-5clAFslnafGm6-LUlQMGcJZgFQbV68DdlUXd0DoFUbieBJcucj2gNek8RZfMP_Pdseh2uJOTmM6hqOmizsOnMXnEki8NoWF"/>
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md flex items-center gap-1 text-[10px] font-bold text-white border border-white/10">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Twitter / X
+                                </div>
+<div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[10px] font-mono-label text-white">
+                                    00:45
+                                </div>
+</div>
+<div class="p-4 flex flex-col gap-2">
+<h3 class="text-body-md font-bold truncate text-on-surface group-hover/card:text-primary transition-colors">Incredible 1v5 Clutch - Global Finals</h3>
+<div class="flex items-center justify-between text-[11px] text-on-surface-variant/60 font-mono-label">
+<span>45.3 MB</span>
+<span>1080p • MP4</span>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<button class="flex-1 bg-surface-variant/30 hover:bg-surface-variant/60 py-2 rounded-lg text-[12px] font-bold transition-all border border-outline-variant/10">Manage</button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Background Shader Overlay -->
+<div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+<div class="absolute top-0 right-0 w-1/2 h-1/2 bg-primary/5 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-secondary/5 blur-[100px] rounded-full"></div>
+</div>
+<script>
+        // Simple micro-interaction for sidebar tree toggles
+        document.querySelectorAll('details').forEach(detail => {
+            detail.addEventListener('toggle', () => {
+                if (detail.open) {
+                    // Could add logic here to close others (accordion style)
+                }
+            });
+        });
+
+        // Search highlight effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-primary/50');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-primary/50');
+        });
+    </script>
+</body></html>
